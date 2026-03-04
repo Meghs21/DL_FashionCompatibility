@@ -160,6 +160,39 @@ def train(model, train_loader, val_loader, num_epochs=10, lr=1e-4, save_path="ch
     return model
 
 # -----------------------------
+# Extract and save embeddings
+@torch.no_grad()
+def save_embeddings(model, data_loader, split_name="valid"):
+    model.eval()
+    all_embeddings = []
+    all_labels = []
+    
+    print(f"\nExtracting {split_name} embeddings...")
+    for images, labels in tqdm(data_loader, desc=f"Embedding {split_name}", leave=False):
+        images = images.to(device)
+        B, N, C, H, W = images.shape
+        images = images.view(B * N, C, H, W)
+        
+        # Extract 512-d embeddings only (no LSTM)
+        embeddings = model.encoder(images)  # [B*N, 512]
+        embeddings = embeddings.view(B, N, -1)  # reshape back to [B, N, 512]
+        
+        all_embeddings.append(embeddings.cpu())
+        all_labels.append(labels)
+    
+    embeddings_tensor = torch.cat(all_embeddings, dim=0)
+    labels_tensor = torch.cat(all_labels, dim=0)
+    
+    # Save
+    save_path = f"embeddings_{split_name}.pt"
+    torch.save({
+        'embeddings': embeddings_tensor,
+        'labels': labels_tensor
+    }, save_path)
+    print(f"✅ Saved {embeddings_tensor.shape} embeddings to {save_path}")
+    return embeddings_tensor, labels_tensor
+
+# -----------------------------
 # Main
 if __name__ == "__main__":
     train_loader, val_loader, test_loader = get_dataloaders(
@@ -171,6 +204,11 @@ if __name__ == "__main__":
     )
 
     model = build_model()
-    model = train(model, train_loader, val_loader, num_epochs=10)
+    model = train(model, train_loader, val_loader, num_epochs=1)
     model.load_state_dict(torch.load("checkpoints/best_model.pth"))
     test(model, test_loader)
+    
+    # Save embeddings for all splits
+    save_embeddings(model, train_loader, "train")
+    save_embeddings(model, val_loader, "valid")
+    save_embeddings(model, test_loader, "test")
