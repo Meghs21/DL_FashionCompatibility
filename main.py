@@ -115,7 +115,7 @@ def test(model, test_loader):
 
 # -----------------------------
 # Training
-def train(model, train_loader, val_loader, num_epochs=1, lr=1e-4, save_path="checkpoints/best_model.pth"):
+def train(model, train_loader, val_loader, num_epochs=10, lr=1e-4, save_path="checkpoints/best_model.pth"):
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
     best_val_loss = float("inf")
 
@@ -147,6 +147,11 @@ def train(model, train_loader, val_loader, num_epochs=1, lr=1e-4, save_path="che
         with open("checkpoints/loss_log.csv", mode='a', newline='') as f:
             csv.writer(f).writerow([epoch+1, avg_loss, val_loss])
 
+        # Save checkpoint after every epoch
+        epoch_checkpoint_path = f"checkpoints/checkpoint_epoch_{epoch+1}.pth"
+        torch.save(model.state_dict(), epoch_checkpoint_path)
+        print(f"Epoch checkpoint saved: {epoch_checkpoint_path}")
+
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             torch.save(model.state_dict(), save_path)
@@ -166,6 +171,6 @@ if __name__ == "__main__":
     )
 
     model = build_model()
-    model = train(model, train_loader, val_loader, num_epochs=1)
+    model = train(model, train_loader, val_loader, num_epochs=10)
     model.load_state_dict(torch.load("checkpoints/best_model.pth"))
     test(model, test_loader)
