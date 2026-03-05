@@ -202,11 +202,17 @@ if __name__ == "__main__":
         test_path="data/polyvore_outfits/disjoint/combined_test.json",
         image_dir="data/polyvore_outfits/images",
         batch_size=8,
-        subset_ratio=0.2  # Using 20% of data
+        subset_ratio=0.5  # Using 50% of data
     )
 
     model = build_model()
-    model = train(model, train_loader, val_loader, num_epochs=10)
+    
+    # Resume from best saved model if it exists
+    if os.path.exists("checkpoints/best_model.pth"):
+        model.load_state_dict(torch.load("checkpoints/best_model.pth"))
+        print("✅ Resumed training from best_model.pth")
+    
+    model = train(model, train_loader, val_loader, num_epochs=30)
     model.load_state_dict(torch.load("checkpoints/best_model.pth"))
     test(model, test_loader)
     
