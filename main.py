@@ -166,31 +166,32 @@ def save_embeddings(model, data_loader, split_name="valid"):
     model.eval()
     all_embeddings = []
     all_labels = []
+    outfit_lengths = []  # Track number of items per outfit
     
     print(f"\nExtracting {split_name} embeddings...")
     for images, labels in tqdm(data_loader, desc=f"Embedding {split_name}", leave=False):
         images = images.to(device)
         B, N, C, H, W = images.shape
-        images = images.view(B * N, C, H, W)
         
-        # Extract 512-d embeddings only (no LSTM)
-        embeddings = model.encoder(images)  # [B*N, 512]
-        embeddings = embeddings.view(B, N, -1)  # reshape back to [B, N, 512]
-        
-        all_embeddings.append(embeddings.cpu())
-        all_labels.append(labels)
+        # Process each outfit individually (variable lengths)
+        for b in range(B):
+            outfit_images = images[b]  # [N, C, H, W]
+            outfit_embeddings = model.encoder(outfit_images)  # [N, 512]
+            
+            all_embeddings.append(outfit_embeddings.cpu())
+            all_labels.append(labels[b].item())
+            outfit_lengths.append(N)
     
-    embeddings_tensor = torch.cat(all_embeddings, dim=0)
-    labels_tensor = torch.cat(all_labels, dim=0)
-    
-    # Save
+    # Save as list of variable-length tensors
     save_path = f"embeddings_{split_name}.pt"
     torch.save({
-        'embeddings': embeddings_tensor,
-        'labels': labels_tensor
+        'embeddings': all_embeddings,  # list of [num_items, 512] tensors
+        'labels': torch.tensor(all_labels),
+        'outfit_lengths': outfit_lengths
     }, save_path)
-    print(f"✅ Saved {embeddings_tensor.shape} embeddings to {save_path}")
-    return embeddings_tensor, labels_tensor
+    print(f"✅ Saved {len(all_embeddings)} outfit embeddings to {save_path}")
+    return all_embeddings, all_labels
+
 
 # -----------------------------
 # Main
@@ -200,11 +201,12 @@ if __name__ == "__main__":
         val_path="data/polyvore_outfits/disjoint/combined_valid.json",
         test_path="data/polyvore_outfits/disjoint/combined_test.json",
         image_dir="data/polyvore_outfits/images",
-        batch_size=8
+        batch_size=8,
+        subset_ratio=0.2  # Using 20% of data
     )
 
     model = build_model()
-    model = train(model, train_loader, val_loader, num_epochs=1)
+    model = train(model, train_loader, val_loader, num_epochs=10)
     model.load_state_dict(torch.load("checkpoints/best_model.pth"))
     test(model, test_loader)
     
