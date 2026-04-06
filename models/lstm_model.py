@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.nn.utils.rnn import pack_padded_sequence
 
 class OutfitLSTM(nn.Module):
     """
@@ -28,20 +29,42 @@ class OutfitLSTM(nn.Module):
         # Final classifier: output a single score
         self.fc = nn.Linear(self.out_dim, 1)
 
-    def forward(self, x):
+    def forward(self, x, lengths=None):
         """
         Args:
             x: Tensor shape [batch, sequence_len, 512]
                Each sequence is an outfit; each timestep is an item
+            lengths: Tensor/List shape [batch], real (unpadded) sequence lengths
         
         Returns:
             score: Tensor shape [batch, 1]
         """
-        # LSTM output for every item in the sequence
-        lstm_out, _ = self.lstm(x)  # [batch, seq_len, hidden_dim * directions]
+        if lengths is None:
+            lengths = torch.full(
+                (x.size(0),),
+                x.size(1),
+                dtype=torch.long,
+                device=x.device,
+            )
+        elif not torch.is_tensor(lengths):
+            lengths = torch.tensor(lengths, dtype=torch.long, device=x.device)
+        else:
+            lengths = lengths.to(device=x.device, dtype=torch.long)
 
-        # Use the LAST output as outfit summary
-        final_repr = lstm_out[:, -1, :]  # [batch, out_dim]
+        # Pack padded sequences so the LSTM ignores padded timesteps.
+        packed_x = pack_padded_sequence(
+            x,
+            lengths.detach().cpu(),
+            batch_first=True,
+            enforce_sorted=False,
+        )
+        _, (h_n, _) = self.lstm(packed_x)
+
+        if self.lstm.bidirectional:
+            h_n = h_n.view(self.lstm.num_layers, 2, x.size(0), self.lstm.hidden_size)
+            final_repr = torch.cat((h_n[-1, 0], h_n[-1, 1]), dim=1)
+        else:
+            final_repr = h_n[-1]
 
         # Regularization
         dropped = self.dropout(final_repr)

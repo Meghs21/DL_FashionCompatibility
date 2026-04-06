@@ -1,30 +1,40 @@
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, Subset
+from torch.utils.data import DataLoader
 from torchvision import transforms
 from dataset.polyvore_dataset import PolyvoreDataset
 from models.resnet_encoder import ResNetEncoder
 from models.lstm_model import OutfitLSTM
 from tqdm import tqdm
-import random
+import sys
+import os
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Load best model
+# Get checkpoint path from command line or use default
+checkpoint_path = sys.argv[1] if len(sys.argv) > 1 else "checkpoints/best_model.pth"
+
+if not os.path.exists(checkpoint_path):
+    print(f"❌ Error: Checkpoint file '{checkpoint_path}' not found!")
+    sys.exit(1)
+
+print(f"Loading model from: {checkpoint_path}\n")
+
+# Load model
 class FashionCompatibilityModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.encoder = ResNetEncoder()
         self.lstm = OutfitLSTM()
 
-    def forward(self, outfit_images):
+    def forward(self, outfit_images, lengths=None):
         B, N, C, H, W = outfit_images.shape
         outfit_images = outfit_images.view(B * N, C, H, W)
         features = self.encoder(outfit_images)
-        return self.lstm(features.view(B, N, -1))
+        return self.lstm(features.view(B, N, -1), lengths)
 
 model = FashionCompatibilityModel().to(device)
-model.load_state_dict(torch.load("checkpoints/best_model.pth"))
+model.load_state_dict(torch.load(checkpoint_path, map_location=device))
 
 # Create test loader
 transform = transforms.Compose([
@@ -35,6 +45,7 @@ transform = transforms.Compose([
 
 def custom_collate_fn(batch):
     outfits, labels = zip(*batch)
+    lengths = torch.tensor([len(o) for o in outfits], dtype=torch.long)
     max_len = max(len(o) for o in outfits)
     padded_outfits = []
     for outfit in outfits:
@@ -44,15 +55,11 @@ def custom_collate_fn(batch):
         if pad_len > 0:
             outfit += [torch.zeros_like(outfit[0]) for _ in range(pad_len)]
         padded_outfits.append(torch.stack(outfit))
-    return torch.stack(padded_outfits), torch.tensor(labels)
+    return torch.stack(padded_outfits), torch.tensor(labels), lengths
 
 test_dataset = PolyvoreDataset("data/polyvore_outfits/disjoint/combined_test.json", "data/polyvore_outfits/images", transform)
 
-# Use subset for speed
-num_samples = int(0.03 * len(test_dataset))
-indices = random.sample(range(len(test_dataset)), num_samples)
-test_subset = Subset(test_dataset, indices)
-test_loader = DataLoader(test_subset, batch_size=8, shuffle=False, collate_fn=custom_collate_fn)
+test_loader = DataLoader(test_dataset, batch_size=8, shuffle=False, collate_fn=custom_collate_fn)
 
 criterion = nn.BCEWithLogitsLoss()
 
@@ -65,9 +72,10 @@ def evaluate(model, test_loader):
     total = 0
     TP = TN = FP = FN = 0
     
-    for images, labels in tqdm(test_loader, desc="Evaluating", leave=False):
-        images, labels = images.to(device), labels.float().to(device)
-        outputs = model(images).squeeze(1)
+    for images, labels, lengths in tqdm(test_loader, desc="Evaluating", leave=False):
+        images = images.to(device)
+        labels = labels.float().to(device)
+        outputs = model(images, lengths).squeeze(1)
         loss = criterion(outputs, labels)
         total_loss += loss.item()
         
@@ -90,7 +98,7 @@ def evaluate(model, test_loader):
     f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
     
     print("\n" + "="*60)
-    print("TEST RESULTS (Best Model)")
+    print(f"TEST RESULTS - {checkpoint_path}")
     print("="*60)
     print(f"Loss: {loss_avg:.4f}")
     print(f"Accuracy: {accuracy:.2f}%")
