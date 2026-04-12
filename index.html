@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ethereal Atelier</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <h2>Ethereal Atelier</h2>
+    <button class="signin">Sign In</button>
+  </div>
+
+  <!-- UPLOAD SECTION -->
+  <div class="container">
+
+    <!-- TOP -->
+    <div class="card">
+      <h3>Top Wear</h3>
+      <input type="file" id="top" onchange="previewImage(event, 'topPreview')">
+      <img id="topPreview" class="preview">
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="card">
+      <h3>Bottom Wear</h3>
+      <input type="file" id="bottom" onchange="previewImage(event, 'bottomPreview')">
+      <img id="bottomPreview" class="preview">
+    </div>
+
+    <!-- FOOTWEAR -->
+    <div class="card">
+      <h3>Footwear</h3>
+      <input type="file" id="footwear" onchange="previewImage(event, 'footwearPreview')">
+      <img id="footwearPreview" class="preview">
+    </div>
+
+    <!-- ACCESSORIES -->
+    <div class="card">
+      <h3>Accessories</h3>
+      <input type="file" id="accessories" onchange="previewImage(event, 'accessoriesPreview')">
+      <img id="accessoriesPreview" class="preview">
+    </div>
+
+  </div>
+
+  <!-- BUTTON -->
+  <div class="center">
+    <button onclick="checkCompatibility()" class="main-btn">
+      Check Compatibility ✨
+    </button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result">
+    <div class="circle" id="circle">
+      <span id="score">0%</span>
+    </div>
+    <p id="feedback"></p>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+
+    // 🖼️ IMAGE PREVIEW FUNCTION
+    function previewImage(event, id) {
+      const file = event.target.files[0];
+      if (file) {
+        const img = document.getElementById(id);
+        img.src = URL.createObjectURL(file);
+        img.style.display = "block";
+        img.style.width = "150px";
+        img.style.marginTop = "10px";
+        img.style.borderRadius = "10px";
+      }
+    }
+
+    // 🔌 BACKEND CONNECTION FUNCTION
+    async function checkCompatibility() {
+
+      const top = document.getElementById("top").files[0];
+      const bottom = document.getElementById("bottom").files[0];
+      const footwear = document.getElementById("footwear").files[0];
+      const accessories = document.getElementById("accessories").files[0];
+
+      if (!top || !bottom) {
+        alert("Top and Bottom are required!");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("top", top);
+      formData.append("bottom", bottom);
+
+      if (footwear) formData.append("footwear", footwear);
+      if (accessories) formData.append("accessories", accessories);
+
+      try {
+        document.getElementById("score").innerText = "⏳";
+
+        const response = await fetch("http://127.0.0.1:5000/predict", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+        console.log(data);
+
+        const score = data.compatibility;
+
+        if (score === undefined) {
+          alert("Backend error: " + JSON.stringify(data));
+          return;
+        }
+
+        // 🎯 Update score
+        document.getElementById("score").innerText = score + "%";
+
+        // 🎨 Update circle
+        document.getElementById("circle").style.background =
+          `conic-gradient(${score > 70 ? "#22c55e" : score > 40 ? "#f59e0b" : "#ef4444"} ${score}%, #374151 ${score}%)`;
+
+        // 💬 Feedback
+        document.getElementById("feedback").innerText =
+          data.feedback || "";
+
+      } catch (error) {
+        console.error(error);
+        alert("Backend connection failed");
+      }
+    }
+
+  </script>
+
+</body>
+</html>
