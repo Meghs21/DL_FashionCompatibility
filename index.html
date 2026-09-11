@@ -2,137 +2,402 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ethereal Atelier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethereal Atelier — Fashion Compatibility & Styling Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <div class="navbar">
-    <h2>Ethereal Atelier</h2>
-    <button class="signin">Sign In</button>
+  <!-- EDITORIAL HEADER BAR -->
+  <header class="editorial-navbar">
+    <div class="brand">
+      <h1 class="logo-text">Ethereal Atelier</h1>
+      <span class="sunflower-badge">🌻 HAUTE COUTURE ATELIER</span>
+    </div>
+
+    <nav class="nav-links">
+      <button class="nav-item active" onclick="switchTab('studioTab')">👗 OUTFIT COMPATIBILITY STUDIO</button>
+      <button class="nav-item" onclick="switchTab('trendsTab')">📰 FASHION TRENDS & EDITORIAL FEED</button>
+      <button class="nav-item" onclick="switchTab('colorTab')">🎨 COLOR THEORY & PALETTE GUIDE</button>
+      <button class="nav-item" onclick="switchTab('stylistTab')">✨ PERSONAL STYLIST GUIDE</button>
+    </nav>
+  </header>
+
+  <main class="main-viewport">
+
+    <!-- ========================================================= -->
+    <!-- TAB 1: OUTFIT COMPATIBILITY STUDIO -->
+    <!-- ========================================================= -->
+    <div id="studioTab" class="tab-content active">
+
+      <!-- EDITORIAL HERO BANNER (BALANCED RESPONSIVE GRID) -->
+      <section class="editorial-cover">
+        <div class="cover-card card-flank-left">
+          <div class="photo-frame">
+            <span class="drop-letter">F</span>
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80" alt="Fashion Model F">
+          </div>
+          <div class="sunflower-accent">🌻</div>
+        </div>
+
+        <div class="cover-card card-center-hero">
+          <div class="photo-frame main-frame">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Main Model">
+            <span class="drop-letter drop-r">.R</span>
+          </div>
+          <h2 class="display-stylingox">STYLING LAB</h2>
+        </div>
+
+        <div class="cover-card card-flank-right">
+          <div class="arrow-callout">↗</div>
+          <div class="photo-frame">
+            <span class="drop-letter">R</span>
+            <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=600&q=80" alt="Fashion Model R">
+          </div>
+        </div>
+      </section>
+
+      <!-- MULTI-ITEM WARDROBE STUDIO SECTION -->
+      <section class="studio-section">
+        <div class="section-header-editorial">
+          <span class="edition-tag">COMPOSITIONAL OUTFIT SUITE</span>
+          <h3>Combinatorial Wardrobe Studio</h3>
+          <p>Upload your tops, bottoms, shoes, and accessories pool. Our engine evaluates permutations and ranks your highest-scoring outfits.</p>
+        </div>
+
+        <!-- PRESET WARDROBE POOLS -->
+        <div class="preset-bar">
+          <span class="preset-label">⚡ Test Wardrobe Pools:</span>
+          <button class="preset-btn" onclick="loadMultiPreset('casual')">🌿 Casual Pool (2 Tops + 2 Bottoms)</button>
+          <button class="preset-btn" onclick="loadMultiPreset('formal')">💼 Formal Pool (2 Tops + 2 Bottoms + 2 Shoes)</button>
+          <button class="preset-btn" onclick="loadMultiPreset('street')">🔥 Streetwear Pool (2 Tops + 2 Bottoms + 2 Acc)</button>
+          <button class="preset-btn clear-btn" onclick="clearAllPools()">🧹 Clear All</button>
+        </div>
+
+        <!-- UPLOAD SLOTS GRID -->
+        <div class="upload-grid">
+          <!-- TOPS POOL -->
+          <div class="upload-card">
+            <div class="card-header">
+              <h4>Tops Wardrobe</h4>
+              <span class="req-star">* Required</span>
+            </div>
+            <p class="card-subtitle">Upload 1 to 4 Tops</p>
+            <div class="thumbnail-strip" id="topThumbnails"></div>
+            <div class="drop-zone" onclick="document.getElementById('topInput').click()">
+              <div class="icon">👕</div>
+              <div class="label">Click to Add Top Items</div>
+            </div>
+            <input type="file" id="topInput" class="file-input" accept="image/*" multiple onchange="handleMultiFileSelect(event, 'top')">
+          </div>
+
+          <!-- BOTTOMS POOL -->
+          <div class="upload-card">
+            <div class="card-header">
+              <h4>Bottoms Wardrobe</h4>
+              <span class="req-star">* Required</span>
+            </div>
+            <p class="card-subtitle">Upload 1 to 4 Pants/Skirts</p>
+            <div class="thumbnail-strip" id="bottomThumbnails"></div>
+            <div class="drop-zone" onclick="document.getElementById('bottomInput').click()">
+              <div class="icon">👖</div>
+              <div class="label">Click to Add Bottom Items</div>
+            </div>
+            <input type="file" id="bottomInput" class="file-input" accept="image/*" multiple onchange="handleMultiFileSelect(event, 'bottom')">
+          </div>
+
+          <!-- FOOTWEAR POOL -->
+          <div class="upload-card">
+            <div class="card-header">
+              <h4>Footwear Pool</h4>
+            </div>
+            <p class="card-subtitle">Upload 1 to 3 Shoes</p>
+            <div class="thumbnail-strip" id="footwearThumbnails"></div>
+            <div class="drop-zone" onclick="document.getElementById('footwearInput').click()">
+              <div class="icon">👟</div>
+              <div class="label">Click to Add Footwear</div>
+            </div>
+            <input type="file" id="footwearInput" class="file-input" accept="image/*" multiple onchange="handleMultiFileSelect(event, 'footwear')">
+          </div>
+
+          <!-- ACCESSORIES POOL -->
+          <div class="upload-card">
+            <div class="card-header">
+              <h4>Accessories Pool</h4>
+            </div>
+            <p class="card-subtitle">Upload 1 to 3 Bags/Belts</p>
+            <div class="thumbnail-strip" id="accessoriesThumbnails"></div>
+            <div class="drop-zone" onclick="document.getElementById('accessoriesInput').click()">
+              <div class="icon">🕶️</div>
+              <div class="label">Click to Add Accessories</div>
+            </div>
+            <input type="file" id="accessoriesInput" class="file-input" accept="image/*" multiple onchange="handleMultiFileSelect(event, 'accessories')">
+          </div>
+        </div>
+
+        <!-- ACTION BUTTON -->
+        <div class="action-bar">
+          <button class="btn-mix" id="mixMatchBtn" onclick="runMixAndMatch()">
+            <span>Generate & Rank Outfit Combos ✨</span>
+          </button>
+        </div>
+
+        <!-- RANKED COMBOS DISPLAY -->
+        <div class="combos-section" id="combosSection">
+          <div class="section-header-editorial">
+            <h3>Ranked Outfit Lookbook</h3>
+            <p id="summaryStatsText">Evaluating wardrobe permutations...</p>
+          </div>
+          <div class="combos-grid" id="combosGrid"></div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAB 2: FASHION TRENDS & EDITORIAL FEED -->
+    <!-- ========================================================= -->
+    <div id="trendsTab" class="tab-content">
+      <section class="editorial-header-banner">
+        <span class="tag-live">● LIVE EDITORIAL FEED</span>
+        <h2>Fashion Trends & Editorial Feed</h2>
+        <p>Full-length Vogue editorial breakdowns, Paris & Milan fashion week highlights, and Pantone color reports directly from our live feed.</p>
+      </section>
+
+      <!-- LIVE SEARCH BAR & CATEGORY FILTERS -->
+      <div class="search-filter-box">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="blogSearchInput" placeholder="Search trends, color rules, or styling guides..." onkeyup="searchBlogs()">
+        </div>
+
+        <div class="blog-filters">
+          <button class="filter-chip active" onclick="filterBlogs('all')">All Trends</button>
+          <button class="filter-chip" onclick="filterBlogs('Runway Highlights')">Runway Highlights</button>
+          <button class="filter-chip" onclick="filterBlogs('Color Analysis')">Color Analysis</button>
+          <button class="filter-chip" onclick="filterBlogs('Style Masterclass')">Stylist Guides</button>
+          <button class="filter-chip" onclick="filterBlogs('Capsule Wardrobe')">Capsule Wardrobe</button>
+          <button class="filter-chip" onclick="filterBlogs('Accessories')">Accessories</button>
+        </div>
+      </div>
+
+      <!-- REAL-TIME BLOGS GRID -->
+      <div class="blogs-grid" id="blogsGrid">
+        <!-- Articles populated dynamically via REST API -->
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAB 3: COLOR THEORY & PALETTE GUIDE -->
+    <!-- ========================================================= -->
+    <div id="colorTab" class="tab-content">
+      <section class="editorial-header-banner">
+        <h2>Color Theory & Personal Palette Lab</h2>
+        <p>Upload a portrait to analyze your skin undertone, or explore seasonal palettes and color wheel rules.</p>
+      </section>
+
+      <!-- FUNCTIONAL PERSONAL PORTRAIT COLOR ANALYZER DROPZONE -->
+      <div class="editorial-card portrait-analyzer-card">
+        <h3>📸 1. Functional Personal Color & Undertone Analyzer</h3>
+        <p class="section-desc">Upload a portrait or selfie photo. Our image processing engine will sample skin pixels to extract your exact undertone, skin hex, seasonal palette, and flattering clothing swatches:</p>
+        
+        <div class="portrait-upload-box" onclick="document.getElementById('portraitInput').click()">
+          <div class="portrait-preview-container">
+            <img id="portraitPreview" class="portrait-img" alt="Portrait Preview">
+            <div id="portraitPlaceholder">
+              <span class="upload-icon">📸</span>
+              <p>Click or Drop Portrait / Selfie Photo</p>
+            </div>
+          </div>
+          <input type="file" id="portraitInput" class="file-input" accept="image/*" onchange="handlePortraitSelect(event)">
+        </div>
+
+        <div class="action-bar" style="margin-top:1.5rem; margin-bottom:1.5rem">
+          <button class="btn-mix" id="analyzeColorBtn" onclick="runPersonalColorAnalysis()">
+            <span>Analyze My Personal Color & Palette ✨</span>
+          </button>
+        </div>
+
+        <!-- DYNAMIC PORTRAIT ANALYSIS RESULTS PANEL -->
+        <div class="portrait-results-panel" id="portraitResultsPanel">
+          <div class="results-header">
+            <div class="skin-hex-badge">
+              <div class="skin-swatch-circle" id="resultSkinCircle"></div>
+              <div>
+                <span class="hex-lbl">Detected Skin Color</span>
+                <h4 id="resultSkinHex">#F4C7A7</h4>
+              </div>
+            </div>
+
+            <div class="classification-box">
+              <span class="undertone-badge" id="resultUndertoneBadge">Warm Undertone</span>
+              <h4 id="resultSeason">Spring (Warm & Bright)</h4>
+            </div>
+          </div>
+
+          <div class="results-body">
+            <div class="rec-column">
+              <h5>🎨 Best Garment Colors (Illuminate Your Skin)</h5>
+              <div class="garment-swatch-list" id="bestColorsList"></div>
+            </div>
+
+            <div class="rec-column">
+              <h5>⚡ Colors to Avoid</h5>
+              <div class="garment-swatch-list" id="avoidColorsList"></div>
+            </div>
+
+            <div class="rec-column">
+              <h5>👑 Jewelry Recommendation</h5>
+              <p class="jewelry-text" id="jewelryText">Yellow Gold & Rose Gold</p>
+            </div>
+          </div>
+
+          <div class="stylist-advice-box" id="stylistAdviceText">
+            <!-- Advice populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D TILTING SEASONAL PALETTES -->
+      <div class="editorial-card">
+        <h3>🎨 2. Seasonal Color Palettes Reference</h3>
+        <div class="seasons-tilt-grid">
+          <div class="season-tilt-card">
+            <span class="season-icon">🌸</span>
+            <h4>Spring Palette</h4>
+            <div class="palette-swatches">
+              <span class="swatch" style="background:#f87171"></span>
+              <span class="swatch" style="background:#fbbf24"></span>
+              <span class="swatch" style="background:#34d399"></span>
+              <span class="swatch" style="background:#60a5fa"></span>
+            </div>
+            <p>Clear, warm, and bright energizing tones.</p>
+          </div>
+
+          <div class="season-tilt-card">
+            <span class="season-icon">☀️</span>
+            <h4>Summer Palette</h4>
+            <div class="palette-swatches">
+              <span class="swatch" style="background:#f472b6"></span>
+              <span class="swatch" style="background:#a78bfa"></span>
+              <span class="swatch" style="background:#38bdf8"></span>
+              <span class="swatch" style="background:#94a3b8"></span>
+            </div>
+            <p>Soft, cool, and muted romantic pastel shades.</p>
+          </div>
+
+          <div class="season-tilt-card">
+            <span class="season-icon">🍂</span>
+            <h4>Autumn Palette</h4>
+            <div class="palette-swatches">
+              <span class="swatch" style="background:#b45309"></span>
+              <span class="swatch" style="background:#78350f"></span>
+              <span class="swatch" style="background:#15803d"></span>
+              <span class="swatch" style="background:#d97706"></span>
+            </div>
+            <p>Rich, warm, and deep earthy forest hues.</p>
+          </div>
+
+          <div class="season-tilt-card">
+            <span class="season-icon">❄️</span>
+            <h4>Winter Palette</h4>
+            <div class="palette-swatches">
+              <span class="swatch" style="background:#0f172a"></span>
+              <span class="swatch" style="background:#be123c"></span>
+              <span class="swatch" style="background:#1d4ed8"></span>
+              <span class="swatch" style="background:#ffffff; border:1px solid #ccc"></span>
+            </div>
+            <p>Vibrant, cool, and high-contrast dramatic tones.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAB 4: PERSONAL STYLIST GUIDE -->
+    <!-- ========================================================= -->
+    <div id="stylistTab" class="tab-content">
+      <section class="editorial-header-banner">
+        <h2>Personal Stylist Guide & Rules</h2>
+        <p>Core rules used by stylists to transform casual garments into Haute Couture silhouettes.</p>
+      </section>
+
+      <!-- ANIMATED STYLING RULES CARDS -->
+      <div class="editorial-card">
+        <h3>👑 The 5 Golden Rules of Personal Styling</h3>
+        <div class="rules-animated-list">
+
+          <div class="animated-rule-card">
+            <div class="rule-badge">01</div>
+            <div class="rule-body">
+              <h4>Rule of Thirds (Proportion Balance)</h4>
+              <p>Avoid 50/50 visual balance (half shirt, half pants). Instead, tuck in tops or wear cropped jackets to create a 1/3 top to 2/3 bottom ratio, visually lengthening legs.</p>
+            </div>
+            <span class="rule-icon">🌻</span>
+          </div>
+
+          <div class="animated-rule-card">
+            <div class="rule-badge">02</div>
+            <div class="rule-body">
+              <h4>Texture Contrast Pairing</h4>
+              <p>Pair contrasting fabric textures to add depth: Leather jacket + Knit sweater, Denim + Silk top, or Heavy wool coat + Crisp cotton shirt.</p>
+            </div>
+            <span class="rule-icon">🌻</span>
+          </div>
+
+          <div class="animated-rule-card">
+            <div class="rule-badge">03</div>
+            <div class="rule-body">
+              <h4>The Sandwich Method</h4>
+              <p>Match your footwear color with your top layer or headwear color, sandwiching a contrasting bottom piece in the middle for effortless balance.</p>
+            </div>
+            <span class="rule-icon">🌻</span>
+          </div>
+
+          <div class="animated-rule-card">
+            <div class="rule-badge">04</div>
+            <div class="rule-body">
+              <h4>Shoe-Accessory Anchor Rule</h4>
+              <p>Ensure your belt, footwear, and leather accessories share matching undertones (e.g., cognac shoes with cognac belt; black boots with silver hardware).</p>
+            </div>
+            <span class="rule-icon">🌻</span>
+          </div>
+
+          <div class="animated-rule-card">
+            <div class="rule-badge">05</div>
+            <div class="rule-body">
+              <h4>Statement Piece Isolation</h4>
+              <p>If wearing a bold pattern or vibrant hue, keep all other outfit elements neutral to allow the statement piece to shine without visual clutter.</p>
+            </div>
+            <span class="rule-icon">🌻</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FULL-LENGTH MAGAZINE ARTICLE MODAL -->
+  <div class="modal-overlay" id="articleModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeBlogModal()">✕</button>
+      <span class="modal-category" id="modalCategory">Category</span>
+      <h2 class="modal-title" id="modalTitle">Article Title</h2>
+      <p class="modal-meta" id="modalMeta">Author • Date • Read Time</p>
+      <div class="modal-img-box">
+        <img id="modalImg" src="" alt="Article Banner">
+      </div>
+      <div class="modal-body" id="modalContent">
+        <!-- Full-length article HTML rendered dynamically -->
+      </div>
+    </div>
   </div>
 
-  <!-- UPLOAD SECTION -->
-  <div class="container">
-
-    <!-- TOP -->
-    <div class="card">
-      <h3>Top Wear</h3>
-      <input type="file" id="top" onchange="previewImage(event, 'topPreview')">
-      <img id="topPreview" class="preview">
-    </div>
-
-    <!-- BOTTOM -->
-    <div class="card">
-      <h3>Bottom Wear</h3>
-      <input type="file" id="bottom" onchange="previewImage(event, 'bottomPreview')">
-      <img id="bottomPreview" class="preview">
-    </div>
-
-    <!-- FOOTWEAR -->
-    <div class="card">
-      <h3>Footwear</h3>
-      <input type="file" id="footwear" onchange="previewImage(event, 'footwearPreview')">
-      <img id="footwearPreview" class="preview">
-    </div>
-
-    <!-- ACCESSORIES -->
-    <div class="card">
-      <h3>Accessories</h3>
-      <input type="file" id="accessories" onchange="previewImage(event, 'accessoriesPreview')">
-      <img id="accessoriesPreview" class="preview">
-    </div>
-
-  </div>
-
-  <!-- BUTTON -->
-  <div class="center">
-    <button onclick="checkCompatibility()" class="main-btn">
-      Check Compatibility ✨
-    </button>
-  </div>
-
-  <!-- RESULT -->
-  <div class="result">
-    <div class="circle" id="circle">
-      <span id="score">0%</span>
-    </div>
-    <p id="feedback"></p>
-  </div>
-
-  <!-- SCRIPT -->
-  <script>
-
-    // 🖼️ IMAGE PREVIEW FUNCTION
-    function previewImage(event, id) {
-      const file = event.target.files[0];
-      if (file) {
-        const img = document.getElementById(id);
-        img.src = URL.createObjectURL(file);
-        img.style.display = "block";
-        img.style.width = "150px";
-        img.style.marginTop = "10px";
-        img.style.borderRadius = "10px";
-      }
-    }
-
-    // 🔌 BACKEND CONNECTION FUNCTION
-    async function checkCompatibility() {
-
-      const top = document.getElementById("top").files[0];
-      const bottom = document.getElementById("bottom").files[0];
-      const footwear = document.getElementById("footwear").files[0];
-      const accessories = document.getElementById("accessories").files[0];
-
-      if (!top || !bottom) {
-        alert("Top and Bottom are required!");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("top", top);
-      formData.append("bottom", bottom);
-
-      if (footwear) formData.append("footwear", footwear);
-      if (accessories) formData.append("accessories", accessories);
-
-      try {
-        document.getElementById("score").innerText = "⏳";
-
-        const response = await fetch("http://127.0.0.1:5000/predict", {
-          method: "POST",
-          body: formData
-        });
-
-        const data = await response.json();
-        console.log(data);
-
-        const score = data.compatibility;
-
-        if (score === undefined) {
-          alert("Backend error: " + JSON.stringify(data));
-          return;
-        }
-
-        // 🎯 Update score
-        document.getElementById("score").innerText = score + "%";
-
-        // 🎨 Update circle
-        document.getElementById("circle").style.background =
-          `conic-gradient(${score > 70 ? "#22c55e" : score > 40 ? "#f59e0b" : "#ef4444"} ${score}%, #374151 ${score}%)`;
-
-        // 💬 Feedback
-        document.getElementById("feedback").innerText =
-          data.feedback || "";
-
-      } catch (error) {
-        console.error(error);
-        alert("Backend connection failed");
-      }
-    }
-
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
