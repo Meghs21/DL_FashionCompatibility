@@ -86,3 +86,11 @@
 - **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
 - **Decision**: Redesign `index.html` and `styles.css` adopting the Paira luxury reference template layout structure (2x2 Hero preview card, 3-step workflow grid, live example dimension breakdown with checkmarks, 4-card features grid, CTA banner, and 4-column luxury footer).
 - **Reasoning**: Provides a sophisticated, editorial luxury visual experience matching the reference screenshots while preserving existing dark emerald palette tokens, interactive lab capabilities, and strict NO AI keyword governance rules.
+
+---
+
+### DEC-014: Outfit Garment Photo Thumbnail Previews in Ranked Lookbook
+- **Date**: 2026-09-12
+- **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
+- **Decision**: Upgrade `/mix_and_match` REST API endpoint and `script.js` to return and render base64 JPEG photo thumbnails (`combo-garments-grid`) for every garment piece (Top, Bottom, Footwear, Accessories) inside each Ranked Outfit card.
+- **Reasoning**: Solves user ambiguity by visually displaying the exact garment photos evaluated in each outfit combination rather than showing plain text tags.

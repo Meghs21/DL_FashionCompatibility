@@ -414,10 +414,16 @@ function renderCombos(data) {
       badgeLabel = "🥉 #3 BRONZE MATCH";
     }
 
-    const itemsStripHtml = outfit.items.map(item => `
-      <div class="item-badge">
-        <div class="cat">${item.category}</div>
-        <div class="swatch" style="background: ${item.hex}" title="${item.hex}"></div>
+    const itemsPreviewHtml = outfit.items.map(item => `
+      <div class="combo-garment-box">
+        <div class="combo-garment-img-wrap">
+          ${item.image ? `<img src="${item.image}" alt="${item.category}">` : `<div class="combo-img-fallback">${item.category}</div>`}
+          <span class="combo-cat-badge">${item.category}</span>
+        </div>
+        <div class="combo-swatch-bar">
+          <span class="combo-swatch-color" style="background:${item.hex}"></span>
+          <span class="combo-hex-code">${item.hex}</span>
+        </div>
       </div>
     `).join("");
 
@@ -426,17 +432,17 @@ function renderCombos(data) {
       
       <div class="combo-top">
         <div>
-          <h4 style="font-family:var(--font-serif); font-size:1.2rem">Outfit Look #${outfit.combo_id}</h4>
-          <span style="font-size:0.8rem; color:var(--text-muted)">Color Harmony: ${outfit.color_harmony}%</span>
+          <h4 style="font-family:var(--font-serif); font-size:1.3rem; color:var(--text-cream)">Outfit Look #${outfit.combo_id}</h4>
+          <span style="font-size:0.82rem; color:var(--text-muted); font-weight:600">Color Harmony: ${outfit.color_harmony}%</span>
         </div>
         <div class="score-val">${outfit.compatibility}%</div>
       </div>
 
-      <div class="item-badge-strip">
-        ${itemsStripHtml}
+      <div class="combo-garments-grid">
+        ${itemsPreviewHtml}
       </div>
 
-      <p style="font-size:0.9rem; margin-bottom:0.75rem; font-weight:700; color:var(--accent-sunflower)">
+      <p style="font-size:0.95rem; margin:1rem 0 0.75rem; font-weight:700; color:var(--accent-terracotta)">
         ${outfit.feedback_summary}
       </p>
 

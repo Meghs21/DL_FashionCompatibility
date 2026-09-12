@@ -1,6 +1,7 @@
 import os
 import io
 import math
+import base64
 import itertools
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -78,6 +79,19 @@ img_transform = transforms.Compose([
 # -------------------------------------------------------------
 # Helper Functions for Color & Feedback Analysis
 # -------------------------------------------------------------
+def pil_to_data_uri(pil_img):
+    """Encodes PIL image to a lightweight JPEG data URI for instant UI rendering."""
+    try:
+        buffered = io.BytesIO()
+        thumb = pil_img.copy()
+        thumb.thumbnail((200, 200))
+        thumb.save(buffered, format="JPEG", quality=82)
+        img_b64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
+        return f"data:image/jpeg;base64,{img_b64}"
+    except Exception as e:
+        print(f"[WARN] Error encoding image thumbnail: {e}")
+        return ""
+
 def extract_dominant_color(pil_img):
     """Extract primary hex color and RGB values from PIL Image."""
     img = pil_img.copy().resize((50, 50))
@@ -808,7 +822,8 @@ def mix_and_match():
                 item_details.append({
                     "category": item["category"].capitalize(),
                     "filename": item["filename"],
-                    "hex": item["hex"]
+                    "hex": item["hex"],
+                    "image": pil_to_data_uri(item["image"])
                 })
 
             evaluated_outfits.append({

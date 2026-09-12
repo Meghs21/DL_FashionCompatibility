@@ -75,3 +75,19 @@
 ### 3. Verification Performed
 - Verified visual alignment against reference screenshots across mobile (<768px) and desktop screens.
 - Confirmed all interactive tabs, 1-click presets, wardrobe pool mix-and-match, live RSS feed modal reader, and personal color analyzer remain fully functional.
+
+---
+
+## Feature 010: Outfit Garment Photo Thumbnail Previews in Ranked Lookbook
+
+### 1. Problem & Scope
+- **Problem**: User could not identify which specific clothing items made up each ranked outfit combination because cards only showed text tags (`Top`, `Bottom`, `Footwear`, `Accessories`).
+- **Goal**: Return base64 image data URIs in `/mix_and_match` API response and render a visual photo thumbnail grid (`combo-garments-grid`) for every garment piece in each Ranked Outfit card.
+
+### 2. Relevant Code Paths
+- Backend REST API: `app.py` (`pil_to_data_uri()`, `/mix_and_match`)
+- Frontend Web Platform: `script.js` (`renderCombos()`), `styles.css` (`.combo-garments-grid`, `.combo-garment-box`)
+
+### 3. Verification Performed
+- Tested `/mix_and_match` API endpoint returning JPEG base64 data URIs.
+- Verified visual photo cards rendered for Tops, Bottoms, Footwear, and Accessories in `#1 BEST MATCH`, `#2 RUNNER UP`, and `#3 BRONZE MATCH` outfit cards.
