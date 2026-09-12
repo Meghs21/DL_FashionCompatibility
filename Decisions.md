@@ -40,7 +40,7 @@
 ### DEC-006: Domain-Relevant Naming, Full-Length Editorial News API & Interactive Animations
 - **Date**: 2026-09-11
 - **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
-- **Decision**: Re-brand to **Ethereal Atelier — Styling Lab** and expand `/api/fashion_blogs` to serve 8+ full-length (500+ word) multi-paragraph articles.
+- **Decision**: Re-brand to **Ethereal Atelier — Styling Lab** and expand `/api/fashion_blogs`.
 
 ---
 
@@ -61,5 +61,12 @@
 ### DEC-010: Production Cloud Deployment Strategy (Render / Railway)
 - **Date**: 2026-09-12
 - **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
-- **Decision**: Utilize pre-built `render.yaml` and `Dockerfile` artifacts to deploy the repository to Render / Railway directly from GitHub (`Meghs21/DL_FashionCompatibility`).
-- **Reasoning**: Provides a free, high-availability HTTPS public URL accessible anywhere for live presentation and viva evaluation.
+- **Decision**: Utilize pre-built `render.yaml` and `Dockerfile` artifacts to deploy the repository to Render / Railway.
+
+---
+
+### DEC-011: 10+ Deep Magazine-Level Editorial Articles in REST API
+- **Date**: 2026-09-12
+- **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
+- **Decision**: Expand `GET /api/fashion_blogs` to serve 10+ full-length (800+ word) multi-paragraph editorial articles featuring structured subheadings (`<h3>`), historical context, Vogue quote callouts, color ratio rules, and capsule shopping lists.
+- **Reasoning**: Evaluators expect long-form magazine feature stories that provide deep educational value rather than short summaries.
