@@ -5,7 +5,7 @@
 ### DEC-001: Maintain ResNet-18 + BiLSTM Architecture
 - **Date**: 2026-09-11
 - **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
-- **Decision**: Keep ResNet-18 + BiLSTM as the core ML/DL model architecture.
+- **Decision**: Keep ResNet-18 + BiLSTM as core ML/DL model architecture.
 
 ---
 
@@ -47,12 +47,19 @@
 ### DEC-007: Pure Luxury Branding & Responsive Hero Grid Alignment
 - **Date**: 2026-09-11
 - **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
-- **Decision**: Remove all "AI" keywords across titles, headers, badges, drop caps (`.R`), and section subtitles. Re-engineer the Hero Cover into a balanced 3-card grid with equal aspect ratios (`4:5`), aligned baselines, and mobile responsive stacking ($< 768\text{px}$).
+- **Decision**: Remove all "AI" keywords across titles, headers, badges, drop caps (`.R`), and section subtitles. Re-engineer the Hero Cover into a balanced 3-card grid (`4:5`).
 
 ---
 
 ### DEC-008: Functional Personal Color & Skin Undertone Analyzer API
 - **Date**: 2026-09-11
 - **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
-- **Decision**: Expose `POST /api/analyze_personal_color` endpoint to parse uploaded portrait photos, sample skin pixel regions, convert RGB $\rightarrow$ HSV/LAB, and return detected skin hex, undertone classification, seasonal color palette, recommended garment swatches, and jewelry guidance.
-- **Reasoning**: Evaluators and users want real, functional image-based personal color analysis instead of static advice cards.
+- **Decision**: Expose `POST /api/analyze_personal_color` endpoint to parse uploaded portrait photos and extract skin color, undertone, and seasonal palettes.
+
+---
+
+### DEC-010: Production Cloud Deployment Strategy (Render / Railway)
+- **Date**: 2026-09-12
+- **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
+- **Decision**: Utilize pre-built `render.yaml` and `Dockerfile` artifacts to deploy the repository to Render / Railway directly from GitHub (`Meghs21/DL_FashionCompatibility`).
+- **Reasoning**: Provides a free, high-availability HTTPS public URL accessible anywhere for live presentation and viva evaluation.

@@ -21,21 +21,21 @@
 ---
 
 ## Feature 005: Responsive Hero Grid Alignment, Pure Luxury Branding & Functional Personal Color Analyzer API
+- Status: Complete & Verified.
+
+---
+
+## Feature 006: Production Cloud Deployment (Render / Railway / Docker)
 
 ### 1. Problem & Scope
-- **Problem**: Hero image frames had vertical alignment gaps, contained unwanted "AI" keywords, and the Color Theory section lacked functional image-based personal color analysis.
-- **Goal**: Re-architect hero cover grid into a balanced responsive 3-card layout (`STYLING LAB`), eliminate all "AI" keywords, and expose `POST /api/analyze_personal_color` for portrait skin tone & undertone extraction.
+- **Problem**: Deploy the project to a public cloud platform so evaluators and interviewers can access the live application via a public HTTPS URL.
+- **Goal**: Enable 1-click cloud hosting using Render (`render.yaml`) or Railway (`Dockerfile`).
 
 ### 2. Relevant Code Paths
-- Backend REST API: `app.py` (`POST /api/analyze_personal_color`)
-- Frontend Web Platform: `index.html`, `styles.css`, `script.js`
+- Deployment Specs: `render.yaml`, `Dockerfile`, `requirements.txt`
+- Core REST Server: `app.py`
 
-### 3. Implementation Steps Taken
-1. Added `POST /api/analyze_personal_color` endpoint in `app.py` for skin pixel sampling, HSV hue extraction, undertone classification, and seasonal palette recommendation.
-2. Re-engineered `.editorial-cover` grid in `index.html` and `styles.css` with equal aspect ratio cards (`4:5`), aligned baselines, and mobile stacking ($< 768\text{px}$).
-3. Removed all "AI" keywords across brand badges, drop caps (`.R`), and hero headers (`STYLING LAB`).
-4. Added Personal Portrait Upload Dropzone and dynamic results panel (`renderPersonalColorResults()`).
-
-### 4. Verification Performed
-- Restarted Flask server.
-- Executed automated API test against `POST /api/analyze_personal_color` with sample portrait image. Verified `200 OK` JSON response returning skin hex, undertone classification, seasonal palette, and recommended clothing swatches.
+### 3. Execution Steps
+1. All changes committed and pushed to GitHub repository `https://github.com/Meghs21/DL_FashionCompatibility.git`.
+2. Render / Railway connected to GitHub repository.
+3. Automated build and deployment via Gunicorn WSGI server.
