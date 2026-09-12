@@ -70,32 +70,43 @@
         </div>
       </section>
 
-      <!-- HOW IT WORKS SECTION (PAIR TEMPLATE REF IMAGE 2) -->
+      <!-- HOW IT WORKS SECTION (PAIR TEMPLATE REF IMAGE 2 - INTERACTIVE STEPPER) -->
       <section class="how-it-works-section" id="howItWorksSection">
         <span class="tag-amber">HOW IT WORKS</span>
         <h2 class="section-serif-heading">Three steps to a perfect outfit</h2>
-        <p class="section-subtext">Ethereal Atelier does the styling work so you can focus on the rest of your day.</p>
+        <p class="section-subtext">Click any step below to test out the styling process live in action.</p>
 
-        <div class="steps-3col-grid">
-          <div class="step-card">
-            <div class="step-icon-badge">☁️</div>
-            <div class="step-number-pill">1</div>
-            <h4 class="step-title">Upload Your Pieces</h4>
-            <p class="step-text">Snap or pick two items from your wardrobe pool or test our curated 1-click presets.</p>
-          </div>
+        <div class="steps-container-wrapper">
+          <div class="stepper-track-line"></div>
+          <div class="steps-3col-grid">
 
-          <div class="step-card">
-            <div class="step-icon-badge badge-amber">🧠</div>
-            <div class="step-number-pill">2</div>
-            <h4 class="step-title">Engine Analyzes Color, Style & Fit</h4>
-            <p class="step-text">Our neural model checks hue harmony, pattern clash, texture balance, and formality levels.</p>
-          </div>
+            <!-- STEP 1 -->
+            <div class="step-card interactive-step" onclick="executeStepAction(1)" id="stepCard1">
+              <div class="step-icon-badge">☁️</div>
+              <div class="step-number-pill">1</div>
+              <h4 class="step-title">Upload Your Pieces</h4>
+              <p class="step-text">Snap or pick two items from your wardrobe pool or test our curated 1-click presets.</p>
+              <span class="step-action-tag">Click to Upload ↗</span>
+            </div>
 
-          <div class="step-card">
-            <div class="step-icon-badge">📈</div>
-            <div class="step-number-pill">3</div>
-            <h4 class="step-title">Get Your Compatibility Score</h4>
-            <p class="step-text">See a clear match score, color swatches, and actionable tips to improve the look.</p>
+            <!-- STEP 2 -->
+            <div class="step-card interactive-step" onclick="executeStepAction(2)" id="stepCard2">
+              <div class="step-icon-badge badge-amber">🧠</div>
+              <div class="step-number-pill">2</div>
+              <h4 class="step-title">Engine Analyzes Color & Fit</h4>
+              <p class="step-text">Our neural model checks hue harmony, pattern clash, texture balance, and formality levels.</p>
+              <span class="step-action-tag">Click to Run Engine ↗</span>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="step-card interactive-step" onclick="executeStepAction(3)" id="stepCard3">
+              <div class="step-icon-badge">📈</div>
+              <div class="step-number-pill">3</div>
+              <h4 class="step-title">Get Your Compatibility Score</h4>
+              <p class="step-text">See a clear match score, color swatches, and actionable tips to improve the look.</p>
+              <span class="step-action-tag">Click to View Scores ↗</span>
+            </div>
+
           </div>
         </div>
       </section>

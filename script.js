@@ -469,3 +469,44 @@ function scrollToSection(sectionId) {
     el.scrollIntoView({ behavior: 'smooth' });
   }
 }
+
+// -------------------------------------------------------------
+// INTERACTIVE 3-STEP WORKFLOW HANDLER
+// -------------------------------------------------------------
+function executeStepAction(stepNumber) {
+  for (let i = 1; i <= 3; i++) {
+    const card = document.getElementById(`stepCard${i}`);
+    if (card) {
+      if (i === stepNumber) card.classList.add('step-active');
+      else card.classList.remove('step-active');
+    }
+  }
+
+  if (stepNumber === 1) {
+    scrollToStudio();
+    const dropzones = document.querySelectorAll('.drop-zone');
+    dropzones.forEach(dz => {
+      dz.classList.add('pulse-highlight');
+      setTimeout(() => dz.classList.remove('pulse-highlight'), 2400);
+    });
+  } else if (stepNumber === 2) {
+    scrollToStudio();
+    loadMultiPreset('formal');
+    setTimeout(() => {
+      runMixAndMatch();
+    }, 350);
+  } else if (stepNumber === 3) {
+    scrollToStudio();
+    const combosSection = document.getElementById('combosSection');
+    if (combosSection && combosSection.style.display !== 'none' && combosSection.offsetHeight > 0) {
+      combosSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      loadMultiPreset('casual');
+      runMixAndMatch();
+      setTimeout(() => {
+        const cs = document.getElementById('combosSection');
+        if (cs) cs.scrollIntoView({ behavior: 'smooth' });
+      }, 700);
+    }
+  }
+}
