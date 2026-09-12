@@ -1,12 +1,15 @@
 :root {
-  --bg-forest: #08332b;
-  --bg-forest-card: rgba(10, 57, 48, 0.88);
-  --bg-dark-slate: #041c17;
-  --accent-sunflower: #facc15;
-  --accent-gold: #eab308;
-  --text-cream: #fefce8;
-  --text-muted: #a7f3d0;
-  --border-light: rgba(250, 204, 21, 0.22);
+  --bg-forest: #211e1a;                 /* Warm dark espresso background */
+  --bg-forest-card: #2a2621;            /* Warm dark espresso card background */
+  --bg-dark-slate: #1a1815;             /* Deepest dark background */
+  --accent-sunflower: #c85738;         /* Warm muted terracotta rust */
+  --accent-gold: #b34728;              /* Deep terracotta accent */
+  --accent-terracotta: #c85738;        /* Muted terracotta rust accent */
+  --accent-terracotta-hover: #b34728;  /* Deep terracotta hover */
+  --accent-olive: #3e4738;             /* Dark olive green for step badges & checkmarks */
+  --text-cream: #eae6de;               /* Soft warm parchment off-white */
+  --text-muted: #9c9588;               /* Warm muted stone grey */
+  --border-light: rgba(234, 230, 222, 0.12); /* Subtle warm border */
   --font-display: 'Syne', sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -21,8 +24,8 @@
 body {
   background-color: var(--bg-forest);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(250, 204, 21, 0.16) 0px, transparent 45%),
-    radial-gradient(at 100% 100%, rgba(4, 28, 23, 0.85) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(200, 87, 56, 0.08) 0px, transparent 45%),
+    radial-gradient(at 100% 100%, rgba(26, 24, 21, 0.9) 0px, transparent 50%);
   color: var(--text-cream);
   font-family: var(--font-body);
   min-height: 100vh;
@@ -418,21 +421,21 @@ body {
 }
 
 .btn-mix {
-  background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
-  color: #041c17;
+  background: linear-gradient(135deg, #c85738 0%, #b34728 100%);
+  color: #ffffff;
   border: none;
   padding: 1.1rem 3.5rem;
   font-size: 1.15rem;
-  font-weight: 800;
+  font-weight: 700;
   border-radius: 9999px;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(250, 204, 21, 0.4);
+  box-shadow: 0 10px 25px rgba(200, 87, 56, 0.35);
   transition: all 0.3s ease;
 }
 
 .btn-mix:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(250, 204, 21, 0.6);
+  box-shadow: 0 15px 35px rgba(200, 87, 56, 0.5);
 }
 
 .combos-section { display: none; }
@@ -1071,7 +1074,7 @@ body {
 /* ========================================================= */
 .tag-amber {
   display: inline-block;
-  color: #d9532f;
+  color: #c85738;
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -1145,7 +1148,7 @@ body {
 }
 
 .cta-primary-btn {
-  background: #d9532f;
+  background: #c85738;
   color: #ffffff;
   border: none;
   font-size: 0.95rem;
@@ -1154,17 +1157,17 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 15px rgba(217, 83, 47, 0.3);
+  box-shadow: 0 4px 15px rgba(200, 87, 56, 0.3);
 }
 
 .cta-primary-btn:hover {
-  background: #c2410c;
+  background: #b34728;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(217, 83, 47, 0.45);
+  box-shadow: 0 6px 20px rgba(200, 87, 56, 0.45);
 }
 
 .cta-secondary-btn {
-  background: rgba(250, 204, 21, 0.1);
+  background: rgba(200, 87, 56, 0.1);
   color: var(--accent-sunflower);
   border: 1px solid var(--border-light);
   font-size: 0.95rem;
@@ -1176,13 +1179,13 @@ body {
 }
 
 .cta-secondary-btn:hover {
-  background: rgba(250, 204, 21, 0.2);
+  background: rgba(200, 87, 56, 0.2);
   transform: translateY(-2px);
 }
 
 /* PAIRA PREVIEW CARD (REF IMAGE 1 RIGHT) */
 .paira-preview-card {
-  background: #0f1c19;
+  background: #25221d;
   border-radius: 1.5rem;
   padding: 1.75rem;
   border: 1px solid var(--border-light);
@@ -1229,7 +1232,7 @@ body {
 }
 
 .score-box {
-  background: #172420;
+  background: #1c1a17;
   border: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
@@ -1241,7 +1244,7 @@ body {
   font-family: var(--font-serif);
   font-size: 2.8rem;
   font-weight: 700;
-  color: #d9532f;
+  color: #c85738;
   line-height: 1;
 }
 
@@ -1290,20 +1293,20 @@ body {
   justify-content: center;
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  background: rgba(250, 204, 21, 0.12);
-  border: 1px solid var(--border-light);
+  background: rgba(62, 71, 56, 0.4);
+  border: 1px solid rgba(62, 71, 56, 0.6);
 }
 
 .step-icon-badge.badge-amber {
-  background: rgba(217, 83, 47, 0.15);
-  border-color: rgba(217, 83, 47, 0.3);
+  background: rgba(200, 87, 56, 0.15);
+  border-color: rgba(200, 87, 56, 0.3);
 }
 
 .step-number-pill {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: #40533c;
+  background: #3e4738;
   color: #ffffff;
   font-size: 0.8rem;
   font-weight: 800;
@@ -1372,7 +1375,7 @@ body {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #40533c;
+  background: #3e4738;
   color: #ffffff;
   font-size: 0.8rem;
   display: flex;
@@ -1382,7 +1385,7 @@ body {
 }
 
 .live-example-card {
-  background: #0f1c19;
+  background: #25221d;
   border-radius: 1.5rem;
   padding: 1.75rem;
   border: 1px solid var(--border-light);
@@ -1425,7 +1428,7 @@ body {
   font-family: var(--font-serif);
   font-size: 2.2rem;
   font-weight: 700;
-  color: #d9532f;
+  color: #c85738;
 }
 
 .attr-pills-row {
@@ -1435,19 +1438,19 @@ body {
 }
 
 .attr-pill {
-  background: rgba(217, 83, 47, 0.15);
-  color: #d9532f;
+  background: rgba(200, 87, 56, 0.15);
+  color: #c85738;
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.4rem 0.85rem;
   border-radius: 20px;
-  border: 1px solid rgba(217, 83, 47, 0.3);
+  border: 1px solid rgba(200, 87, 56, 0.3);
 }
 
 .attr-pill.pill-green {
-  background: rgba(64, 83, 60, 0.3);
-  color: #a7f3d0;
-  border-color: rgba(64, 83, 60, 0.5);
+  background: rgba(62, 71, 56, 0.4);
+  color: #a0b396;
+  border-color: rgba(62, 71, 56, 0.6);
 }
 
 /* FEATURES GRID SECTION (REF IMAGE 4) */
