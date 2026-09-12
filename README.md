@@ -78,9 +78,7 @@ docker run -p 5000:5000 fashion-compatibility-ai
 
 ---
 
-## 🎓 Viva & Interview Presentation Cheat Sheet
 
-> Use these points during project viva and technical interviews:
 
 * **Q: Why combine ResNet-18 with BiLSTM instead of a standard classifier?**
   * *Answer*: Clothing items in an outfit are inherently sequential and context-dependent. ResNet-18 acts as the spatial feature extractor, while BiLSTM models how items relate to each other sequentially (e.g. how footwear complements trousers, which complement tops).
