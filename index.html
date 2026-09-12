@@ -33,35 +33,161 @@
     <!-- ========================================================= -->
     <div id="studioTab" class="tab-content active">
 
-      <!-- EDITORIAL HERO BANNER (BALANCED RESPONSIVE GRID) -->
-      <section class="editorial-cover">
-        <div class="cover-card card-flank-left">
-          <div class="photo-frame">
-            <span class="drop-letter">F</span>
-            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80" alt="Fashion Model F">
+      <!-- HERO SPLIT SECTION (PAIR TEMPLATE REF IMAGE 1) -->
+      <section class="hero-split-section">
+        <div class="hero-text-col">
+          <span class="tag-amber">EDITORIAL STYLING LAB</span>
+          <h2 class="hero-title">Know if your outfit works — <span class="title-em">before you leave the house</span></h2>
+          <p class="hero-subtitle">Upload your pieces and Ethereal Atelier instantly checks color harmony, texture clash, and formality so you always dress with confidence.</p>
+          <div class="hero-cta-group">
+            <button class="cta-primary-btn" onclick="scrollToStudio()">Try Outfit Studio Now ↗</button>
+            <button class="cta-secondary-btn" onclick="switchTab('trendsTab')">Explore Live Trends</button>
           </div>
-          <div class="sunflower-accent">🌻</div>
         </div>
 
-        <div class="cover-card card-center-hero">
-          <div class="photo-frame main-frame">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Main Model">
-            <span class="drop-letter drop-r">.R</span>
+        <div class="hero-card-col">
+          <div class="paira-preview-card">
+            <div class="card-top-bar">
+              <span>Your Outfit</span>
+              <span class="item-count">3 items</span>
+            </div>
+            <div class="paira-grid-2x2">
+              <div class="grid-item-box">
+                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=500&q=80" alt="Tailored Blazer">
+              </div>
+              <div class="grid-item-box">
+                <img src="https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?auto=format&fit=crop&w=500&q=80" alt="Silk Skirt">
+              </div>
+              <div class="grid-item-box">
+                <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=500&q=80" alt="Leather Loafers">
+              </div>
+              <div class="grid-item-box score-box">
+                <span class="match-num">94%</span>
+                <span class="match-lbl">MATCH</span>
+              </div>
+            </div>
           </div>
-          <h2 class="display-stylingox">STYLING LAB</h2>
         </div>
+      </section>
 
-        <div class="cover-card card-flank-right">
-          <div class="arrow-callout">↗</div>
-          <div class="photo-frame">
-            <span class="drop-letter">R</span>
-            <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=600&q=80" alt="Fashion Model R">
+      <!-- HOW IT WORKS SECTION (PAIR TEMPLATE REF IMAGE 2) -->
+      <section class="how-it-works-section" id="howItWorksSection">
+        <span class="tag-amber">HOW IT WORKS</span>
+        <h2 class="section-serif-heading">Three steps to a perfect outfit</h2>
+        <p class="section-subtext">Ethereal Atelier does the styling work so you can focus on the rest of your day.</p>
+
+        <div class="steps-3col-grid">
+          <div class="step-card">
+            <div class="step-icon-badge">☁️</div>
+            <div class="step-number-pill">1</div>
+            <h4 class="step-title">Upload Your Pieces</h4>
+            <p class="step-text">Snap or pick two items from your wardrobe pool or test our curated 1-click presets.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-icon-badge badge-amber">🧠</div>
+            <div class="step-number-pill">2</div>
+            <h4 class="step-title">Engine Analyzes Color, Style & Fit</h4>
+            <p class="step-text">Our neural model checks hue harmony, pattern clash, texture balance, and formality levels.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-icon-badge">📈</div>
+            <div class="step-number-pill">3</div>
+            <h4 class="step-title">Get Your Compatibility Score</h4>
+            <p class="step-text">See a clear match score, color swatches, and actionable tips to improve the look.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIVE BREAKDOWN SECTION (PAIR TEMPLATE REF IMAGE 3) -->
+      <section class="live-breakdown-section" id="liveBreakdownSection">
+        <span class="tag-amber">LIVE EXAMPLE</span>
+        <h2 class="section-serif-heading">See why these pieces work</h2>
+        <p class="section-subtext">Ethereal Atelier breaks down every dimension of compatibility so you understand the "why" behind the score.</p>
+
+        <div class="breakdown-split-grid">
+          <div class="breakdown-left-col">
+            <ul class="feature-check-list">
+              <li class="feature-check-item">
+                <span class="check-circle">✓</span>
+                <span>Complementary navy and cream palette</span>
+              </li>
+              <li class="feature-check-item">
+                <span class="check-circle">✓</span>
+                <span>Matching formal occasion level</span>
+              </li>
+              <li class="feature-check-item">
+                <span class="check-circle">✓</span>
+                <span>Balanced textures without visual noise</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="breakdown-right-col">
+            <div class="live-example-card">
+              <div class="example-items-row">
+                <div class="example-img-box">
+                  <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=400&q=80" alt="Blazer">
+                </div>
+                <div class="example-img-box">
+                  <img src="https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?auto=format&fit=crop&w=400&q=80" alt="Skirt">
+                </div>
+                <div class="example-img-box">
+                  <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80" alt="Loafers">
+                </div>
+              </div>
+
+              <div class="score-display-row">
+                <h4>Compatibility</h4>
+                <span class="score-val">92%</span>
+              </div>
+
+              <div class="attr-pills-row">
+                <span class="attr-pill">Great Color Harmony</span>
+                <span class="attr-pill pill-green">Balanced Formality</span>
+                <span class="attr-pill">Complementary Textures</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES GRID SECTION (PAIR TEMPLATE REF IMAGE 4) -->
+      <section class="features-grid-section" id="featuresSection">
+        <span class="tag-amber">FEATURES</span>
+        <h2 class="section-serif-heading">More than a simple yes or no</h2>
+        <p class="section-subtext">Ethereal Atelier understands fashion the way a stylist would — in detail.</p>
+
+        <div class="features-4col-grid">
+          <div class="feature-item-card">
+            <span class="feature-item-icon">⚡</span>
+            <h4 class="feature-item-title">Instant Analysis</h4>
+            <p class="feature-item-desc">Get a full compatibility readout, color harmony evaluation, and explainable feedback in under three seconds.</p>
+          </div>
+
+          <div class="feature-item-card">
+            <span class="feature-item-icon">🎨</span>
+            <h4 class="feature-item-title">Color Theory Engine</h4>
+            <p class="feature-item-desc">Checks complementary, analogous, and monochromatic harmony in HSV/RGB color space.</p>
+          </div>
+
+          <div class="feature-item-card">
+            <span class="feature-item-icon">👤</span>
+            <h4 class="feature-item-title">Style Personalization</h4>
+            <p class="feature-item-desc">Tells you if a pair fits your skin undertone, seasonal color palette, and casual or formal dressing codes.</p>
+          </div>
+
+          <div class="feature-item-card">
+            <span class="feature-item-icon">📰</span>
+            <h4 class="feature-item-title">Live Fashion Trends</h4>
+            <p class="feature-item-desc">Aggregates real-time news, fashion week runway reports, and Vogue editorial highlights directly into your feed.</p>
           </div>
         </div>
       </section>
 
       <!-- MULTI-ITEM WARDROBE STUDIO SECTION -->
-      <section class="studio-section">
+      <section class="studio-section" id="combinatorialStudio">
         <div class="section-header-editorial">
           <span class="edition-tag">COMPOSITIONAL OUTFIT SUITE</span>
           <h3>Combinatorial Wardrobe Studio</h3>
@@ -379,6 +505,48 @@
         </div>
       </div>
     </div>
+
+    <!-- CTA BANNER SECTION (PAIR TEMPLATE REF IMAGE 5) -->
+    <section class="cta-banner-section">
+      <h2 class="section-serif-heading" style="font-size: 2.8rem;">Never second-guess an outfit again</h2>
+      <p class="section-subtext" style="margin-bottom: 2rem;">Upload your first pair today and see if they really do go together.</p>
+      <button class="cta-primary-btn" style="font-size: 1.05rem; padding: 1rem 2.4rem;" onclick="scrollToStudio()">Check My Outfit Now</button>
+    </section>
+
+    <!-- LUXURY FOOTER (PAIR TEMPLATE REF IMAGE 5) -->
+    <footer class="luxury-footer">
+      <div class="footer-brand">
+        <h3>Ethereal Atelier</h3>
+        <p>Haute Couture outfit compatibility & luxury personal styling platform.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>PRODUCT</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="scrollToStudio()">Outfit Studio</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('trendsTab')">Fashion Trends</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('colorTab')">Color Theory Lab</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>COMPANY</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)">About Atelier</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('trendsTab')">Editorial Journal</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('stylistTab')">Stylist Guides</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>SUPPORT</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)">Help Center</a></li>
+          <li><a href="javascript:void(0)">Privacy Policy</a></li>
+          <li><a href="javascript:void(0)">Terms of Service</a></li>
+        </ul>
+      </div>
+    </footer>
 
   </main>
 

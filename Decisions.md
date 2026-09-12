@@ -78,3 +78,11 @@
 - **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
 - **Decision**: Upgrade `GET /api/fashion_blogs` to dynamically fetch live RSS news feeds from major fashion publications (Vogue, Fashionista, Elle) using Python standard libraries (`urllib.request` and `xml.etree.ElementTree`) with a 15-minute in-memory TTL cache and fallback redundancy to 10+ curated long-form editorial articles.
 - **Reasoning**: Ensures fashion news automatically updates with real-time fashion week headlines, publisher attribution, live dates, thumbnail imagery, and direct links to official publisher articles without adding extra third-party dependencies.
+
+---
+
+### DEC-013: Paira Reference Design Template Overhaul & High-Fashion Layout
+- **Date**: 2026-09-12
+- **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
+- **Decision**: Redesign `index.html` and `styles.css` adopting the Paira luxury reference template layout structure (2x2 Hero preview card, 3-step workflow grid, live example dimension breakdown with checkmarks, 4-card features grid, CTA banner, and 4-column luxury footer).
+- **Reasoning**: Provides a sophisticated, editorial luxury visual experience matching the reference screenshots while preserving existing dark emerald palette tokens, interactive lab capabilities, and strict NO AI keyword governance rules.

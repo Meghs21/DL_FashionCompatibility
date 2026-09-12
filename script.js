@@ -448,3 +448,24 @@ function renderCombos(data) {
     combosGrid.appendChild(card);
   });
 }
+
+// -------------------------------------------------------------
+// REFERENCE TEMPLATE NAVIGATION SCROLL HELPERS
+// -------------------------------------------------------------
+function scrollToStudio() {
+  switchTab('studioTab');
+  const el = document.getElementById('combinatorialStudio');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function scrollToSection(sectionId) {
+  switchTab('studioTab');
+  const el = document.getElementById(sectionId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+}
