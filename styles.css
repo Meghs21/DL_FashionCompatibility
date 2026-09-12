@@ -1335,7 +1335,7 @@ body {
   background: var(--bg-dark-slate);
   border: 1px solid var(--border-light);
   border-radius: 1.75rem;
-  padding: 3.5rem 3rem;
+  padding: 4rem 3.5rem;
   margin-bottom: 4rem;
 }
 
@@ -1344,7 +1344,6 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 3.5rem;
   align-items: center;
-  margin-top: 2rem;
 }
 
 @media (max-width: 992px) {
@@ -1354,12 +1353,31 @@ body {
   }
 }
 
+.breakdown-left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.breakdown-left-col .section-serif-heading {
+  font-size: 2.8rem;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.breakdown-left-col .section-subtext {
+  text-align: left;
+  margin: 0 0 2rem 0;
+  max-width: 480px;
+}
+
 .feature-check-list {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 .feature-check-item {
