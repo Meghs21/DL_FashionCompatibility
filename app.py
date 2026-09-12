@@ -4,6 +4,8 @@ import math
 import itertools
 import urllib.request
 import xml.etree.ElementTree as ET
+import re
+import html
 import torch
 import torch.nn as nn
 from PIL import Image
@@ -329,15 +331,126 @@ def health():
     })
 
 # -------------------------------------------------------------
-# 10+ DEEP MAGAZINE-LEVEL EDITORIAL FASHION ARTICLES API
+# LIVE EXTERNAL FASHION RSS NEWS AGGREGATOR ENGINE
 # -------------------------------------------------------------
+RSS_CACHE = {
+    "last_updated": 0,
+    "articles": []
+}
+CACHE_TTL = 900  # 15 minutes cache TTL
+
+def fetch_live_fashion_rss():
+    """
+    Fetches real-time RSS news feeds from major fashion publications
+    (Fashionista, Vogue, Elle) using standard library urllib & xml.etree.
+    """
+    sources = [
+        {"name": "Fashionista", "url": "https://fashionista.com/.rss/full/", "category": "Runway Highlights"},
+        {"name": "Vogue", "url": "https://www.vogue.com/feed/rss", "category": "High Fashion"},
+        {"name": "Elle", "url": "https://www.elle.com/rss/all.xml/", "category": "Style & Culture"}
+    ]
+    parsed_articles = []
+
+    for src in sources:
+        try:
+            req = urllib.request.Request(
+                src['url'],
+                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+            )
+            res = urllib.request.urlopen(req, timeout=5)
+            raw_xml = res.read()
+            root = ET.fromstring(raw_xml)
+            items = root.findall('.//item')
+
+            for idx, item in enumerate(items[:8]):
+                title = item.findtext('title', '').strip()
+                link = item.findtext('link', '').strip()
+                pub_date = item.findtext('pubDate', '').strip()
+                creator = item.findtext('{http://purl.org/dc/elements/1.1/}creator', '').strip() or f"{src['name']} Editorial Board"
+
+                desc = item.findtext('description', '').strip()
+                encoded = item.findtext('{http://purl.org/rss/1.0/modules/content/}encoded', '').strip()
+
+                # Image extraction rule
+                img_url = None
+                thumb = item.find('{http://search.yahoo.com/mrss/}thumbnail')
+                if thumb is not None and 'url' in thumb.attrib:
+                    img_url = thumb.attrib['url']
+                if not img_url:
+                    content_media = item.find('{http://search.yahoo.com/mrss/}content')
+                    if content_media is not None and 'url' in content_media.attrib:
+                        img_url = content_media.attrib['url']
+                if not img_url:
+                    enclosure = item.find('enclosure')
+                    if enclosure is not None and 'url' in enclosure.attrib:
+                        img_url = enclosure.attrib['url']
+                if not img_url:
+                    img_match = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', encoded or desc)
+                    if img_match:
+                        img_url = img_match.group(1)
+                if not img_url:
+                    img_url = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80'
+
+                # Clean summary
+                raw_summary = desc or encoded or ''
+                summary_text = re.sub(r'<[^>]+>', '', html.unescape(raw_summary))
+                summary = (summary_text[:220].strip() + '...') if len(summary_text) > 220 else summary_text.strip()
+
+                # Content cleanup
+                full_body = encoded if len(encoded) > len(desc) else desc
+                clean_body = re.sub(r'<script.*?</script>', '', full_body, flags=re.DOTALL)
+                clean_body = re.sub(r'<iframe.*?</iframe>', '', clean_body, flags=re.DOTALL)
+
+                if not clean_body or len(re.sub(r'<[^>]+>', '', clean_body).strip()) < 100:
+                    clean_body = f"""
+                    <p>{summary}</p>
+                    <p class="editorial-highlight">This exclusive feature was published by <strong>{src['name']}</strong>. Click the link below to access the complete editorial report on their official website.</p>
+                    """
+
+                words = len(re.sub(r'<[^>]+>', '', clean_body).split())
+                read_time = f"{max(3, words // 180)} min read"
+
+                parsed_articles.append({
+                    "id": f"rss-{src['name'].lower()}-{idx}",
+                    "title": title,
+                    "summary": summary,
+                    "category": src['category'],
+                    "author": f"{creator} • {src['name']}",
+                    "publisher": src['name'],
+                    "read_time": read_time,
+                    "date": pub_date[:16] if pub_date else 'Live Feed',
+                    "image": img_url,
+                    "content": clean_body,
+                    "link": link,
+                    "is_live": True
+                })
+        except Exception as e:
+            print(f"[WARN] Error fetching RSS feed for {src['name']}: {e}")
+
+    return parsed_articles
+
+
 @app.route("/api/fashion_blogs", methods=["GET"])
 def fashion_blogs():
     """
-    Serves 10+ long-form (800+ word) magazine-level editorial features
-    with multi-section HTML structure, historical context, quote blocks,
-    color wheel ratios, and capsule shopping lists.
+    Serves live dynamically aggregated RSS articles from Vogue, Fashionista, and Elle,
+    cached with a 15-minute TTL, with seamless fallback to curated magazine feature stories.
     """
+    import time
+
+    current_time = time.time()
+    if current_time - RSS_CACHE["last_updated"] < CACHE_TTL and RSS_CACHE["articles"]:
+        print("[INFO] Returning cached live RSS fashion articles.")
+        return jsonify({
+            "status": "success",
+            "source": "Live RSS Fashion Aggregator Engine (Cached)",
+            "is_live_feed": True,
+            "total_articles": len(RSS_CACHE["articles"]),
+            "articles": RSS_CACHE["articles"]
+        })
+
+    live_articles = fetch_live_fashion_rss()
+
     editorial_articles = [
         {
             "id": "blog-301",
@@ -370,7 +483,7 @@ def fashion_blogs():
         {
             "id": "blog-302",
             "title": "Pantone Color Analysis 2026: The Coexistence of Sunflower Yellow & Emerald Teal",
-            "subtitle": "Deconstructing why high-contrast complementary color palettes create maximum visual elegance in AI evaluation models.",
+            "subtitle": "Deconstructing why high-contrast complementary color palettes create maximum visual elegance in evaluation models.",
             "category": "Color Analysis",
             "author": "Dr. Marcus Thorne, Senior Color Theorist",
             "read_time": "8 min read",
@@ -415,7 +528,7 @@ def fashion_blogs():
         {
             "id": "blog-304",
             "title": "Capsule Wardrobe 3.0: 10 Core Pieces, 30 High-Fashion Combinations",
-            "subtitle": "Building a sustainable luxury wardrobe that maximizes mix-and-match compatibility for AI algorithmic recommendation.",
+            "subtitle": "Building a sustainable luxury wardrobe that maximizes mix-and-match compatibility for algorithmic recommendation.",
             "category": "Capsule Wardrobe",
             "author": "Vogue Editorial Staff",
             "read_time": "8 min read",
@@ -539,11 +652,18 @@ def fashion_blogs():
         }
     ]
 
+    # Combine live articles with fallback articles to ensure at least 10+ high quality items
+    combined_articles = live_articles + editorial_articles if len(live_articles) < 10 else live_articles
+
+    RSS_CACHE["last_updated"] = current_time
+    RSS_CACHE["articles"] = combined_articles
+
     return jsonify({
         "status": "success",
-        "source": "Vogue Editorial Feed API Engine",
-        "total_articles": len(editorial_articles),
-        "articles": editorial_articles
+        "source": "Live RSS Fashion Aggregator Engine (Fashionista, Vogue, Elle)",
+        "is_live_feed": True,
+        "total_articles": len(combined_articles),
+        "articles": combined_articles
     })
 
 # -------------------------------------------------------------

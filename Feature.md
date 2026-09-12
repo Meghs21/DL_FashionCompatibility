@@ -43,3 +43,20 @@
 ### 3. Verification Performed
 - Restarted Flask server.
 - Executed automated API test against `GET /api/fashion_blogs`. Verified `200 OK` response returning 10 articles with average content length $> 2500$ characters per feature story.
+
+---
+
+## Feature 008: Live External Fashion News RSS Aggregator Engine (Vogue, Fashionista, Elle)
+
+### 1. Problem & Scope
+- **Problem**: Static articles do not update dynamically over time. The user requested live, real-time fashion news updates from external fashion publications.
+- **Goal**: Implement `fetch_live_fashion_rss()` in `app.py` parsing live public RSS feeds from Vogue, Fashionista, and Elle. Serve live headlines, pubDates, author attributions, thumbnail imagery, and direct links to publisher articles.
+
+### 2. Relevant Code Paths
+- Backend REST API: `app.py` (`fetch_live_fashion_rss()`, `GET /api/fashion_blogs`)
+- Frontend Web Platform: `index.html`, `script.js` (`renderBlogs()`, `openBlogModal()`)
+
+### 3. Verification Performed
+- Ran python RSS parsing test script verifying 18–24 live items fetched from external RSS feeds.
+- Verified `/api/fashion_blogs` returning `is_live_feed: True` and returning 24 live fashion articles with real publisher links.
+- Confirmed UI blog cards render `LIVE [PUBLISHER]` badges and modal renders "Read Original Feature ↗" action button.

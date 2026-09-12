@@ -180,9 +180,12 @@ function renderBlogs(articles) {
     card.className = "blog-card";
     card.onclick = () => openBlogModal(article.id);
 
+    const liveBadgeHtml = article.is_live ? `<span style="position:absolute; top:12px; left:12px; background:var(--emerald); color:#fff; font-size:0.68rem; font-weight:700; padding:0.25rem 0.6rem; border-radius:4px; letter-spacing:0.06em; z-index:2; text-transform:uppercase; box-shadow:0 2px 6px rgba(0,0,0,0.25);">LIVE ${article.publisher || 'FEED'}</span>` : '';
+
     card.innerHTML = `
-      <div class="blog-img-container">
-        <img src="${article.image}" alt="${article.title}">
+      <div class="blog-img-container" style="position:relative;">
+        ${liveBadgeHtml}
+        <img src="${article.image}" alt="${article.title}" onerror="this.src='https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80'">
         <span class="blog-cat-badge">${article.category}</span>
       </div>
       <div class="blog-body">
@@ -242,8 +245,23 @@ function openBlogModal(articleId) {
   document.getElementById("modalTitle").innerText = article.title;
   document.getElementById("modalMeta").innerText = `${article.author} • ${article.date} • ${article.read_time}`;
   document.getElementById("modalImg").src = article.image;
-  document.getElementById("modalContent").innerHTML = article.content;
 
+  let modalHtml = article.content;
+  if (article.link) {
+    modalHtml += `
+      <div style="margin-top:2.5rem; padding:1.5rem; background:rgba(8,51,43,0.04); border-left:4px solid var(--emerald); border-radius:0 8px 8px 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); display:block; font-weight:700;">Original Publication</span>
+          <strong style="color:var(--emerald); font-size:1.05rem;">${article.publisher || 'Official Press Release'}</strong>
+        </div>
+        <a href="${article.link}" target="_blank" class="luxury-btn-secondary" style="font-size:0.85rem; text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem; padding:0.6rem 1.2rem;">
+          Read Original Feature ↗
+        </a>
+      </div>
+    `;
+  }
+
+  document.getElementById("modalContent").innerHTML = modalHtml;
   document.getElementById("articleModal").classList.add("active");
 }
 

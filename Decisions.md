@@ -70,3 +70,11 @@
 - **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
 - **Decision**: Expand `GET /api/fashion_blogs` to serve 10+ full-length (800+ word) multi-paragraph editorial articles featuring structured subheadings (`<h3>`), historical context, Vogue quote callouts, color ratio rules, and capsule shopping lists.
 - **Reasoning**: Evaluators expect long-form magazine feature stories that provide deep educational value rather than short summaries.
+
+---
+
+### DEC-012: Live External Fashion News RSS Aggregator API Engine
+- **Date**: 2026-09-12
+- **AI Agent Context**: Gemini 3.6 Flash (Antigravity AI)
+- **Decision**: Upgrade `GET /api/fashion_blogs` to dynamically fetch live RSS news feeds from major fashion publications (Vogue, Fashionista, Elle) using Python standard libraries (`urllib.request` and `xml.etree.ElementTree`) with a 15-minute in-memory TTL cache and fallback redundancy to 10+ curated long-form editorial articles.
+- **Reasoning**: Ensures fashion news automatically updates with real-time fashion week headlines, publisher attribution, live dates, thumbnail imagery, and direct links to official publisher articles without adding extra third-party dependencies.
