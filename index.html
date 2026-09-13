@@ -217,6 +217,7 @@
         <!-- UPLOAD SLOTS GRID -->
         <div class="upload-grid">
           <!-- TOPS POOL -->
+          <!-- TOPS POOL -->
           <div class="upload-card">
             <div class="card-header">
               <h4>Tops Wardrobe</h4>
@@ -228,6 +229,7 @@
               <div class="icon">👕</div>
               <div class="label">Click to Add Top Items</div>
             </div>
+            <button type="button" class="btn-camera-trigger" onclick="openCameraModal('top', event)">📸 Take Photo with Camera</button>
             <input type="file" id="topInput" class="file-input" accept="image/*" multiple onchange="handleMultiFileSelect(event, 'top')">
           </div>
 
@@ -243,6 +245,7 @@
               <div class="icon">👖</div>
               <div class="label">Click to Add Bottom Items</div>
             </div>
+            <button type="button" class="btn-camera-trigger" onclick="openCameraModal('bottom', event)">📸 Take Photo with Camera</button>
             <input type="file" id="bottomInput" class="file-input" accept="image/*" multiple onchange="handleMultiFileSelect(event, 'bottom')">
           </div>
 
@@ -257,6 +260,7 @@
               <div class="icon">👟</div>
               <div class="label">Click to Add Footwear</div>
             </div>
+            <button type="button" class="btn-camera-trigger" onclick="openCameraModal('footwear', event)">📸 Take Photo with Camera</button>
             <input type="file" id="footwearInput" class="file-input" accept="image/*" multiple onchange="handleMultiFileSelect(event, 'footwear')">
           </div>
 
@@ -271,6 +275,7 @@
               <div class="icon">🕶️</div>
               <div class="label">Click to Add Accessories</div>
             </div>
+            <button type="button" class="btn-camera-trigger" onclick="openCameraModal('accessories', event)">📸 Take Photo with Camera</button>
             <input type="file" id="accessoriesInput" class="file-input" accept="image/*" multiple onchange="handleMultiFileSelect(event, 'accessories')">
           </div>
         </div>
@@ -351,6 +356,8 @@
           </div>
           <input type="file" id="portraitInput" class="file-input" accept="image/*" onchange="handlePortraitSelect(event)">
         </div>
+
+        <button type="button" class="btn-camera-trigger" onclick="openCameraModal('portrait', event)" style="max-width:320px; margin:0.75rem auto 0; display:flex;">📸 Take Selfie / Photo with Camera</button>
 
         <div class="action-bar" style="margin-top:1.5rem; margin-bottom:1.5rem">
           <button class="btn-mix" id="analyzeColorBtn" onclick="runPersonalColorAnalysis()">
@@ -572,6 +579,28 @@
       </div>
       <div class="modal-body" id="modalContent">
         <!-- Full-length article HTML rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- WEBRTC LIVE CAMERA PHOTO CAPTURE MODAL -->
+  <div class="modal-overlay" id="cameraModal">
+    <div class="modal-card camera-modal-card">
+      <button class="modal-close" onclick="closeCameraModal()">✕</button>
+      <div class="camera-modal-header">
+        <h3 id="cameraModalTitle">📸 Capture Photo</h3>
+        <p style="color:var(--text-muted); font-size:0.88rem; margin-top:0.25rem;">Align your garment or face within the frame</p>
+      </div>
+
+      <div class="camera-view-container">
+        <video id="cameraVideo" autoplay playsinline></video>
+        <canvas id="cameraCanvas" style="display:none;"></canvas>
+      </div>
+
+      <div class="camera-actions-bar">
+        <button type="button" class="luxury-btn-secondary" onclick="switchCameraFacing()" style="padding:0.7rem 1.2rem; border-radius:8px;">🔄 Switch Camera</button>
+        <button type="button" class="luxury-btn-primary" onclick="captureCameraPhoto()">📸 Snap & Add Photo</button>
+        <button type="button" class="luxury-btn-secondary" onclick="closeCameraModal()" style="padding:0.7rem 1.2rem; border-radius:8px;">Cancel</button>
       </div>
     </div>
   </div>

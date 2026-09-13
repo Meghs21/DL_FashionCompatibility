@@ -1750,3 +1750,95 @@ body {
 .footer-links a:hover {
   color: var(--accent-sunflower);
 }
+
+/* -------------------------------------------------------------
+ * CAMERA CAPTURE TRIGGER BUTTON & MODAL STYLING
+ * ------------------------------------------------------------- */
+.btn-camera-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: rgba(200, 87, 56, 0.12);
+  color: var(--accent-terracotta);
+  border: 1px dashed var(--accent-terracotta);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-camera-trigger:hover {
+  background: var(--accent-terracotta);
+  color: #ffffff;
+  border-style: solid;
+  transform: translateY(-1px);
+}
+
+.camera-modal-card {
+  max-width: 650px;
+  text-align: center;
+}
+
+.camera-modal-header {
+  margin-bottom: 1.25rem;
+}
+
+.camera-modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--text-cream);
+  margin-bottom: 0.25rem;
+}
+
+.camera-view-container {
+  position: relative;
+  width: 100%;
+  background: #0d0b09;
+  border: 2px solid var(--border-light);
+  border-radius: 1rem;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-view-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.luxury-btn-primary {
+  background: var(--accent-terracotta);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(200, 87, 56, 0.3);
+}
+
+.luxury-btn-primary:hover {
+  background: #b0492d;
+  transform: translateY(-1px);
+}

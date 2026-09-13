@@ -420,10 +420,6 @@ function renderCombos(data) {
           ${item.image ? `<img src="${item.image}" alt="${item.category}">` : `<div class="combo-img-fallback">${item.category}</div>`}
           <span class="combo-cat-badge">${item.category}</span>
         </div>
-        <div class="combo-swatch-bar">
-          <span class="combo-swatch-color" style="background:${item.hex}"></span>
-          <span class="combo-hex-code">${item.hex}</span>
-        </div>
       </div>
     `).join("");
 
@@ -515,4 +511,122 @@ function executeStepAction(stepNumber) {
       }, 700);
     }
   }
+}
+
+// -------------------------------------------------------------
+// WEBRTC CAMERA CAPTURE FUNCTIONALITY
+// -------------------------------------------------------------
+let currentCameraStream = null;
+let currentCameraTarget = null; // 'top', 'bottom', 'footwear', 'accessories', or 'portrait'
+let currentFacingMode = 'user'; // 'user' or 'environment'
+
+async function openCameraModal(targetCategory, event) {
+  if (event) event.stopPropagation();
+  currentCameraTarget = targetCategory;
+
+  const titles = {
+    top: '📸 Take Top Garment Photo',
+    bottom: '📸 Take Bottom Garment Photo',
+    footwear: '📸 Take Footwear Photo',
+    accessories: '📸 Take Accessory Photo',
+    portrait: '📸 Take Portrait / Selfie Photo'
+  };
+  const titleEl = document.getElementById('cameraModalTitle');
+  if (titleEl) titleEl.innerText = titles[targetCategory] || '📸 Capture Photo';
+
+  const modal = document.getElementById('cameraModal');
+  if (modal) modal.classList.add('active');
+
+  await startCameraStream();
+}
+
+async function startCameraStream() {
+  if (currentCameraStream) {
+    currentCameraStream.getTracks().forEach(track => track.stop());
+  }
+
+  const videoEl = document.getElementById('cameraVideo');
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert('Camera access is not supported on this browser or environment.');
+    closeCameraModal();
+    return;
+  }
+
+  try {
+    const constraints = {
+      video: {
+        facingMode: currentFacingMode,
+        width: { ideal: 1280 },
+        height: { ideal: 960 }
+      },
+      audio: false
+    };
+
+    currentCameraStream = await navigator.mediaDevices.getUserMedia(constraints);
+    if (videoEl) {
+      videoEl.srcObject = currentCameraStream;
+    }
+  } catch (err) {
+    console.error('Camera access error:', err);
+    alert(`Unable to access camera: ${err.message || 'Permission denied or device unavailable.'}`);
+    closeCameraModal();
+  }
+}
+
+async function switchCameraFacing() {
+  currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+  await startCameraStream();
+}
+
+function captureCameraPhoto() {
+  const videoEl = document.getElementById('cameraVideo');
+  const canvasEl = document.getElementById('cameraCanvas');
+
+  if (!videoEl || !videoEl.videoWidth) {
+    alert('Camera stream is initializing, please try again in a moment.');
+    return;
+  }
+
+  canvasEl.width = videoEl.videoWidth;
+  canvasEl.height = videoEl.videoHeight;
+
+  const ctx = canvasEl.getContext('2d');
+  ctx.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
+
+  canvasEl.toBlob((blob) => {
+    if (!blob) {
+      alert('Failed to capture image frame from camera.');
+      return;
+    }
+
+    const filename = `camera_${currentCameraTarget}_${Date.now()}.jpg`;
+    const capturedFile = new File([blob], filename, { type: 'image/jpeg' });
+
+    if (currentCameraTarget === 'portrait') {
+      activePortraitFile = capturedFile;
+      const imgEl = document.getElementById("portraitPreview");
+      const placeholder = document.getElementById("portraitPlaceholder");
+
+      if (imgEl && placeholder) {
+        imgEl.src = URL.createObjectURL(capturedFile);
+        imgEl.style.display = "block";
+        placeholder.style.display = "none";
+      }
+    } else if (wardrobePools[currentCameraTarget]) {
+      wardrobePools[currentCameraTarget].push(capturedFile);
+      renderThumbnails(currentCameraTarget);
+    }
+
+    closeCameraModal();
+  }, 'image/jpeg', 0.92);
+}
+
+function closeCameraModal() {
+  if (currentCameraStream) {
+    currentCameraStream.getTracks().forEach(track => track.stop());
+    currentCameraStream = null;
+  }
+
+  const modal = document.getElementById('cameraModal');
+  if (modal) modal.classList.remove('active');
 }
