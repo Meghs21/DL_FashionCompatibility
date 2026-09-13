@@ -697,6 +697,7 @@ def predict():
                 file = request.files[cat]
                 img_bytes = file.read()
                 pil_img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+                pil_img.thumbnail((600, 600))
                 pil_images.append(pil_img)
                 
                 hex_color, rgb = extract_dominant_color(pil_img)
@@ -772,6 +773,7 @@ def mix_and_match():
                 if file and file.filename != '':
                     img_bytes = file.read()
                     pil_img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+                    pil_img.thumbnail((600, 600))
                     hex_color, rgb = extract_dominant_color(pil_img)
                     pools[cat_name].append({
                         "category": cat_name,

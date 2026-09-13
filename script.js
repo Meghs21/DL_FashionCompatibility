@@ -89,12 +89,19 @@ async function runPersonalColorAnalysis() {
       body: formData
     });
 
-    if (!response.ok) {
-      const errData = await response.json();
-      throw new Error(errData.error || "Personal color analysis failed");
+    const contentType = response.headers.get("content-type") || "";
+    let data;
+    if (contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      const text = await response.text();
+      throw new Error(`Server returned status ${response.status}. Please try again.`);
     }
 
-    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || "Personal color analysis failed");
+    }
+
     renderPersonalColorResults(data);
 
   } catch (err) {
@@ -369,12 +376,19 @@ async function runMixAndMatch() {
       body: formData
     });
 
-    if (!response.ok) {
-      const errData = await response.json();
-      throw new Error(errData.error || "Combinatorial pipeline error");
+    const contentType = response.headers.get("content-type") || "";
+    let data;
+    if (contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      const text = await response.text();
+      throw new Error(`Server returned status ${response.status}. Please check backend logs.`);
     }
 
-    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || "Combinatorial pipeline error");
+    }
+
     renderCombos(data);
 
   } catch (error) {
