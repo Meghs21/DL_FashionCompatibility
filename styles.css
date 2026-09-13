@@ -1842,3 +1842,184 @@ body {
   background: #b0492d;
   transform: translateY(-1px);
 }
+
+/* -------------------------------------------------------------
+ * COMPREHENSIVE MOBILE PHONE INTERFACE & LAYOUT POLISH
+ * ------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .editorial-navbar {
+    padding: 0.85rem 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .nav-links {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 0.35rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none; /* Safari/Chrome */
+  }
+
+  .nav-item {
+    font-size: 0.76rem;
+    padding: 0.4rem 0.65rem;
+    flex-shrink: 0;
+  }
+
+  .main-viewport {
+    margin: 1rem auto;
+    padding: 0 0.85rem;
+  }
+
+  .editorial-cover {
+    padding: 1.5rem 1rem;
+    border-radius: 1.25rem;
+    text-align: center;
+  }
+
+  .display-stylingox {
+    font-size: 2.1rem;
+  }
+
+  .cover-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .upload-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .upload-card {
+    min-height: auto;
+    padding: 1.25rem;
+  }
+
+  .action-bar {
+    margin: 1.25rem 0;
+  }
+
+  .btn-mix {
+    width: 100%;
+    padding: 0.9rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .combo-card {
+    padding: 1.25rem;
+    border-radius: 1.25rem;
+  }
+
+  .combo-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .score-val {
+    font-size: 1.75rem;
+    align-self: flex-end;
+    margin-top: -1.75rem;
+  }
+
+  .combo-garments-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+
+  .reason-box {
+    font-size: 0.82rem;
+    padding: 0.75rem;
+  }
+
+  .editorial-search-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+  }
+
+  .editorial-search-bar input {
+    width: 100%;
+  }
+
+  .editorial-search-bar button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .portrait-analyzer-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .portrait-results-panel {
+    padding: 1.25rem 1rem;
+  }
+
+  .camera-modal-card {
+    padding: 1.25rem 1rem;
+    max-width: 95vw;
+    border-radius: 1.25rem;
+  }
+
+  .camera-view-container {
+    aspect-ratio: 1;
+  }
+
+  .camera-actions-bar {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.6rem;
+  }
+
+  .camera-actions-bar button {
+    width: 100%;
+  }
+
+  .luxury-footer {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    text-align: center;
+  }
+
+  .footer-brand p {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .display-stylingox {
+    font-size: 1.75rem;
+  }
+
+  .section-serif-heading {
+    font-size: 1.6rem !important;
+  }
+
+  .preset-pills {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .preset-btn {
+    font-size: 0.78rem;
+    padding: 0.4rem 0.75rem;
+  }
+}
