@@ -7,6 +7,7 @@
 - **Status**: All features complete, tested, verified, and active.
 
 ### DONE:
+- Removed **🌻 HAUTE COUTURE ATELIER Badge** (`.sunflower-badge`) from the top navigation bar in `index.html` as requested.
 - Removed **FEATURES Grid Section** ("More than a simple yes or no") from `index.html` as requested.
 - Added **Comprehensive Mobile Interface & Responsive Polish** in `styles.css` (`max-width: 768px` and `max-width: 480px` breakpoints):
   - Fixed mobile navbar with touch-friendly horizontal swipeable tab bar (`overflow-x: auto`).
